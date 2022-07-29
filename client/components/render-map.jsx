@@ -2,9 +2,8 @@ import React from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import AppContext from '../lib/app-context';
 
-let center = {
-  lat: 33.63487, lng: -117.74045
-};
+let center = {};
+
 const key = process.env.GOOGLE_MAPS_API_KEY;
 
 export class RenderMap extends React.Component {
@@ -18,7 +17,7 @@ export class RenderMap extends React.Component {
       <GoogleMap
       mapContainerClassName='map-container'
       center={center}
-      zoom={11}>
+      zoom={18}>
       <Marker position={center}/>
       </GoogleMap>
       </LoadScript>

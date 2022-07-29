@@ -1,47 +1,36 @@
-import React, { useMemo, useState } from 'react';
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import React from 'react';
+import { RenderMap } from './render-map';
+import AppContext from '../lib/app-context';
 
-export default function HomeMap() {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyC3q7FbfvJEgmnvm2Lq2dMKurjfBFqWQb0'
-  });
-  if (!isLoaded) {
-    return <div>Loading...</div>;
+export default class HomeMap extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lat: 33.63487,
+      lng: -117.74045
+    };
   }
-  return (
-  <>
-  <Map/>
-  <Locate/>
-  </>
-  );
+
+  componentDidMount() {
+    if (navigator.geolocation) {
+      navigator.geolocation.watchPosition(position => {
+        this.setState({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        });
+      });
+    }
+  }
+
+  render() {
+    const { lat, lng } = this.state;
+    const contextValue = { lat, lng };
+    return (
+    <AppContext.Provider value={contextValue}>
+    <RenderMap />
+    </AppContext.Provider>
+    );
+  }
 }
 
-// golden palace: lat: 34.04055, lng: -118.46473
-
-function Map() {
-  const center = useMemo(() => ({ lat: 33.63487, lng: -117.74045 }), []);
-  return <GoogleMap
-  onDragEnd={HandleDrag}
-  zoom={11}
-  center={{ lat: 33.63487, lng: -117.74045 }}
-  mapContainerClassName = 'map-container'>
-    <Marker position={center} />
-  </GoogleMap>;
-}
-
-function Locate() {
-  const [lat, setLat] = useState([]);
-  const [lng, setLng] = useState([]);
-  React.useEffect(() => {
-    navigator.geolocation.getCurrentPosition(position => {
-      setLat(position.coords.latitude);
-      setLng(position.coords.longitude);
-    });
-    // console.log('Latitude is: ', lat);
-    // console.log('Longitude is: ', lng);
-  }, [lat, lng]);
-}
-
-function HandleDrag() {
-  // console.log(navigator);
-}
+HomeMap.contextType = AppContext;
