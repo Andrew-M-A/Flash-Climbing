@@ -1,0 +1,23 @@
+  // const placesOfInterest = [
+  //   {
+  //     name: 'Location 1',
+  //     location: {
+  //       lat: 34.04055,
+  //       lng: -118.46473
+  //     }
+  //   },
+  //   {
+  //     name: 'Location 2',
+  //     location: {
+  //       lat: 33.6349,
+  //       lng: -117.7405
+  //     }
+  //   },
+  //   {
+  //     name: 'Location 3',
+  //     location: {
+  //       lat: 33.6960,
+  //       lng: -117.9578
+  //     }
+  //   }
+  // ];
