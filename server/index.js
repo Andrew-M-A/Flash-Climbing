@@ -29,8 +29,14 @@ app.get('/api/nearby', (req, res, next) => {
     radius: 1000
   })
     .then(response => {
-      res.json(response);
-    }).then(data => res.json(data))
+      const bizCoords = [];
+      for (let i = 0; i < response.jsonBody.businesses.length; i++) {
+        const { name, alias, id, latitude, longitude } = response.jsonBody.businesses[i];
+        bizCoords.push(name, alias, id, latitude, longitude);
+      }
+      // console.log(bizCoords);
+      res.json(response.jsonBody);
+    }).then(data => res.json(data.businesses[0]))
     .catch(e => {
       res.status(400);
     });
