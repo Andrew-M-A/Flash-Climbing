@@ -9,7 +9,7 @@ const key = process.env.GOOGLE_MAPS_API_KEY;
 export class RenderMap extends React.Component {
   render() {
 
-    const { lat, lng } = this.context;
+    const { lat, lng, gymInfo } = this.context;
     center = { lat, lng };
 
     return (
@@ -18,11 +18,25 @@ export class RenderMap extends React.Component {
       mapContainerClassName='map-container'
       center={center}
       zoom={18}>
-      <Marker position={center}/>
+      <Marker position={center} title="LFZ BAYBEEE"/>
+      {renderMarkers(gymInfo)}
       </GoogleMap>
       </LoadScript>
     );
   }
+}
+
+function renderMarkers(gyms) {
+  return gyms.map((coordinates, i) => {
+    const coords = {
+      lat: gyms[i].coordinates.latitude,
+      lng: gyms[i].coordinates.longitude
+    };
+    const title = gyms[i].name;
+    return (<Marker key={i} position={coords} title={title} />);
+  }
+  );
+
 }
 
 RenderMap.contextType = AppContext;

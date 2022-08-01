@@ -21,22 +21,16 @@ app.get('/api/hello', (req, res) => {
 
 app.use(errorMiddleware);
 
-app.get('/api/nearby', (req, res, next) => {
+app.get('/api/climbing', (req, res, next) => {
   client.search({
-    term: 'climbing',
+    term: 'boulder, climb, gym',
     latitude: 33.6349171,
     longitude: -117.7405465,
-    radius: 1000
+    radius: 30000
   })
     .then(response => {
-      const bizCoords = [];
-      for (let i = 0; i < response.jsonBody.businesses.length; i++) {
-        const { name, alias, id, latitude, longitude } = response.jsonBody.businesses[i];
-        bizCoords.push(name, alias, id, latitude, longitude);
-      }
-      // console.log(bizCoords);
-      res.json(response.jsonBody);
-    }).then(data => res.json(data.businesses[0]))
+      res.json(response.jsonBody.businesses);
+    }).then(data => res.json(data))
     .catch(e => {
       res.status(400);
     });
