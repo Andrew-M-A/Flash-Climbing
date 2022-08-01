@@ -19,8 +19,6 @@ app.get('/api/hello', (req, res) => {
   res.json({ hello: 'world' });
 });
 
-app.use(errorMiddleware);
-
 app.get('/api/climbing', (req, res, next) => {
   client.search({
     term: 'boulder, climb, gym',
@@ -30,11 +28,11 @@ app.get('/api/climbing', (req, res, next) => {
   })
     .then(response => {
       res.json(response.jsonBody.businesses);
-    }).then(data => res.json(data))
-    .catch(e => {
-      res.status(400);
-    });
+    })
+    .catch(err => next(err));
 });
+
+app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
   process.stdout.write(`\n\napp listening on port ${process.env.PORT}\n\n`);
