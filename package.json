@@ -20,7 +20,8 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "yelp-fusion": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
