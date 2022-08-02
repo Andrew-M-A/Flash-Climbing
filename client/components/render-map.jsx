@@ -7,6 +7,7 @@ let center = {};
 const key = process.env.GOOGLE_MAPS_API_KEY;
 
 export class RenderMap extends React.Component {
+
   render() {
 
     const { lat, lng, gymInfo } = this.context;
@@ -17,8 +18,12 @@ export class RenderMap extends React.Component {
       <GoogleMap
       mapContainerClassName='map-container'
       center={center}
-      zoom={18}>
-      <Marker position={center} title="LFZ BAYBEEE"/>
+      zoom={11}>
+      <Marker
+      position={center}
+      title="LFZ BAYBEEE"
+      animation={window.google.maps.Animation.BOUNCE}
+      />
       {renderMarkers(gymInfo)}
       </GoogleMap>
       </LoadScript>
@@ -33,7 +38,12 @@ function renderMarkers(gyms) {
       lng: gyms[i].coordinates.longitude
     };
     const title = gyms[i].name;
-    return (<Marker key={i} position={coords} title={title} />);
+    return (<Marker
+      key={i}
+      position={coords}
+      title={title}
+      animation={window.google.maps.Animation.DROP}
+      />);
   }
   );
 
