@@ -1,6 +1,8 @@
 import React from 'react';
-import { RenderMap } from './render-map';
+import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
 import AppContext from '../lib/app-context';
+
+const key = process.env.GOOGLE_MAPS_API_KEY;
 
 export default class HomeMap extends React.Component {
   constructor(props) {
@@ -13,11 +15,39 @@ export default class HomeMap extends React.Component {
       destination: null,
       directions: null
     };
+    this.handleClick = this.handleClick.bind(this);
+    this.renderMarkers = this.renderMarkers.bind(this);
   }
 
-  mapClick = e => {
-    this.setState({ markerPos: e.latLng });
-  };
+  renderMarkers(gyms) {
+    return gyms.map((coordinates, i) => {
+      const coords = {
+        lat: gyms[i].coordinates.latitude,
+        lng: gyms[i].coordinates.longitude
+      };
+      const title = gyms[i].name;
+      return (<Marker
+        icon={{
+          url: 'https://cdn2.iconfinder.com/data/icons/wsd-map-markers-2/512/wsd_markers_72-512.png',
+          scaledSize: new window.google.maps.Size(45, 45)
+        }}
+        onClick={this.handleClick}
+        key={gyms[i].id}
+        position={coords}
+        title={title}
+        animation={window.google.maps.Animation.DROP}
+      />);
+    });
+  }
+
+  handleClick(event) {
+    this.setState({
+      destination: {
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng()
+      }
+    });
+  }
 
   getDirections = () => {
     const directionsService = new window.google.maps.DirectionsService();
@@ -79,12 +109,28 @@ export default class HomeMap extends React.Component {
   }
 
   render() {
-    const { lat, lng, gymInfo } = this.state;
-    const contextValue = { lat, lng, gymInfo };
+    const center = {
+      lat: this.state.lat,
+      lng: this.state.lng
+    };
     return (
-    <AppContext.Provider value={contextValue}>
-    <RenderMap />
-    </AppContext.Provider>
+        <LoadScript googleMapsApiKey={key}>
+          <GoogleMap
+            mapContainerClassName='map-container'
+            center={center}
+            zoom={10}
+            options={{
+              mapTypeControl: false
+            }}>
+            <Marker
+              onClick={this.handleClick}
+              position={center}
+              title="LFZ BAYBEEE"
+            />
+            {this.renderMarkers(this.state.gymInfo)}
+          </GoogleMap>
+        </LoadScript>
+
     );
   }
 }
