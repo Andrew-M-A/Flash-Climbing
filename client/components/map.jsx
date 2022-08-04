@@ -13,7 +13,11 @@ export default class HomeMap extends React.Component {
       gymInfo: [],
       currentPosition: null,
       destination: null,
-      directions: null,
+      trip: {
+        distance: null,
+        duration: null,
+        directions: null
+      },
       clickedGym: null
     };
     this.handleClick = this.handleClick.bind(this);
@@ -45,17 +49,23 @@ export default class HomeMap extends React.Component {
           travelMode: window.google.maps.TravelMode.DRIVING
         },
         (result, status) => {
-          if (status === window.google.maps.DirectionsStatus.OK) {
+          this.setState({
+            trip: {
+              distance: result.routes[0].legs[0].distance,
+              duration: result.routes[0].legs[0].duration,
+              directions: result.routes[0].legs[0].steps
+            }
+          });
+          if (status === window.google.maps.DirectionsStatus.OK && result !== null) {
             this.setState({
               directions: result
             });
           } else {
             console.error(`error fetching directions ${result}`);
           }
+
         }
       );
-    } else {
-      // console.log('Please pick a destination!');
     }
   }
 
@@ -83,7 +93,7 @@ export default class HomeMap extends React.Component {
             options={{ pixelOffset: new window.google.maps.Size(0, -10) }}
             position={coords}>
             <div className='info-window, flex'>
-              <div><button onClick={this.getDirections()} className='direction-button'>DIRECTIONS</button></div>
+              <div><button onClick={this.getDirections} className='direction-button'>DIRECTIONS</button></div>
               <button className='direction-button'> RATING </button>
             </div>
           </InfoWindow>
@@ -126,12 +136,17 @@ export default class HomeMap extends React.Component {
   }
 
   render() {
+
     const center = {
       lat: this.state.lat,
       lng: this.state.lng
     };
 
+    const { trip } = this.state;
+    const contextValue = { trip };
+
     return (
+        <AppContext.Provider value={contextValue}>
         <LoadScript googleMapsApiKey={key}>
           <GoogleMap
             mapContainerClassName='map-container'
@@ -154,6 +169,7 @@ export default class HomeMap extends React.Component {
             )}
           </GoogleMap>
         </LoadScript>
+      </AppContext.Provider>
 
     );
   }
