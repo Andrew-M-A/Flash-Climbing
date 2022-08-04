@@ -49,15 +49,13 @@ export default class Map extends React.Component {
           travelMode: window.google.maps.TravelMode.DRIVING
         },
         (result, status) => {
-          this.setState({
-            trip: {
-              distance: result.routes[0].legs[0].distance,
-              duration: result.routes[0].legs[0].duration,
-              directions: result.routes[0].legs[0].steps
-            }
-          });
           if (status === window.google.maps.DirectionsStatus.OK && result !== null) {
             this.setState({
+              trip: {
+                distance: result.routes[0].legs[0].distance,
+                duration: result.routes[0].legs[0].duration,
+                directions: result.routes[0].legs[0].steps
+              },
               directions: result
             });
           } else {
@@ -148,7 +146,7 @@ export default class Map extends React.Component {
             mapTypeId='c5df4b8f9589fad8'
             mapContainerClassName='map-container'
             center={center}
-            zoom={11}
+            zoom={10}
             options={{
               mapTypeControl: false,
               fullscreenControlOptions: false,
