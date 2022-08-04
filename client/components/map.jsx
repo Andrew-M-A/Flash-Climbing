@@ -1,5 +1,5 @@
 import React from 'react';
-import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker, InfoWindow, DirectionsRenderer } from '@react-google-maps/api';
 import AppContext from '../lib/app-context';
 
 const key = process.env.GOOGLE_MAPS_API_KEY;
@@ -13,35 +13,17 @@ export default class HomeMap extends React.Component {
       gymInfo: [],
       currentPosition: null,
       destination: null,
-      directions: null
+      directions: null,
+      clickedGym: null
     };
     this.handleClick = this.handleClick.bind(this);
     this.renderMarkers = this.renderMarkers.bind(this);
+    this.getDirections = this.getDirections.bind(this);
   }
 
-  renderMarkers(gyms) {
-    return gyms.map((coordinates, i) => {
-      const coords = {
-        lat: gyms[i].coordinates.latitude,
-        lng: gyms[i].coordinates.longitude
-      };
-      const title = gyms[i].name;
-      return (<Marker
-        icon={{
-          url: 'https://cdn2.iconfinder.com/data/icons/wsd-map-markers-2/512/wsd_markers_72-512.png',
-          scaledSize: new window.google.maps.Size(45, 45)
-        }}
-        onClick={this.handleClick}
-        key={gyms[i].id}
-        position={coords}
-        title={title}
-        animation={window.google.maps.Animation.DROP}
-      />);
-    });
-  }
-
-  handleClick(event) {
+  handleClick(event, gym) {
     this.setState({
+      clickedGym: gym,
       destination: {
         lat: event.latLng.lat(),
         lng: event.latLng.lng()
@@ -49,7 +31,7 @@ export default class HomeMap extends React.Component {
     });
   }
 
-  getDirections = () => {
+  getDirections() {
     const directionsService = new window.google.maps.DirectionsService();
 
     const origin = this.state.currentPosition;
@@ -75,7 +57,42 @@ export default class HomeMap extends React.Component {
     } else {
       // console.log('Please pick a destination!');
     }
-  };
+  }
+
+  renderMarkers(gyms) {
+    return gyms.map((coordinates, i) => {
+      const coords = {
+        lat: gyms[i].coordinates.latitude,
+        lng: gyms[i].coordinates.longitude
+      };
+      const title = gyms[i].name;
+      return (
+      <Marker
+        icon={{
+          url: 'https://cdn2.iconfinder.com/data/icons/wsd-map-markers-2/512/wsd_markers_72-512.png',
+          scaledSize: new window.google.maps.Size(45, 45)
+        }}
+        onClick={event => this.handleClick(event, gyms[i].id)}
+        key={gyms[i].id}
+        position={coords}
+        title={title}
+        animation={window.google.maps.Animation.DROP}>
+          {this.state.clickedGym === gyms[i].id &&
+          <InfoWindow
+            key={gyms[i].id}
+            options={{ pixelOffset: new window.google.maps.Size(0, -10) }}
+            position={coords}>
+            <div className='info-window, flex'>
+              <div><button onClick={this.getDirections()} className='direction-button'>DIRECTIONS</button></div>
+              <button className='direction-button'> RATING </button>
+            </div>
+          </InfoWindow>
+          }
+        </Marker>
+
+      );
+    });
+  }
 
   componentDidMount() {
     if (navigator.geolocation) {
@@ -113,21 +130,28 @@ export default class HomeMap extends React.Component {
       lat: this.state.lat,
       lng: this.state.lng
     };
+
     return (
         <LoadScript googleMapsApiKey={key}>
           <GoogleMap
             mapContainerClassName='map-container'
             center={center}
-            zoom={10}
+            zoom={11}
             options={{
-              mapTypeControl: false
+              mapTypeControl: false,
+              fullscreenControlOptions: false,
+              streetViewControl: false
             }}>
             <Marker
-              onClick={this.handleClick}
               position={center}
               title="LFZ BAYBEEE"
             />
             {this.renderMarkers(this.state.gymInfo)}
+            {this.state.directions !== null && (
+            <DirectionsRenderer
+              directions={this.state.directions}
+            />
+            )}
           </GoogleMap>
         </LoadScript>
 

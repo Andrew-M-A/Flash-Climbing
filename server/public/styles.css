@@ -1,4 +1,34 @@
 .map-container {
-  width: 50%;
+  width: 100%;
   height: 100vh;
+}
+
+@media (max-width: 500px) {
+  .map-container {
+    width: 100%;
+    height: 100vh;
+  }
+}
+
+.info-window {
+  background-color: white;
+  border-radius: 50%;
+}
+
+.direction-button {
+  border-radius: 0.2rem;
+  border-style: none;
+  background-color: gold;
+  color: white;
+  margin: 2px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
 }
