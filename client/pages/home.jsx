@@ -1,8 +1,8 @@
 import React from 'react';
-import HomeMap from '../components/map';
+import Map from '../components/map';
 
 export default function Home(props) {
   return (
-    <HomeMap/>
+    <Map/>
   );
 }

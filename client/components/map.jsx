@@ -4,7 +4,7 @@ import AppContext from '../lib/app-context';
 
 const key = process.env.GOOGLE_MAPS_API_KEY;
 
-export default class HomeMap extends React.Component {
+export default class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -142,13 +142,10 @@ export default class HomeMap extends React.Component {
       lng: this.state.lng
     };
 
-    const { trip } = this.state;
-    const contextValue = { trip };
-
     return (
-        <AppContext.Provider value={contextValue}>
         <LoadScript googleMapsApiKey={key}>
           <GoogleMap
+            mapTypeId='c5df4b8f9589fad8'
             mapContainerClassName='map-container'
             center={center}
             zoom={11}
@@ -165,14 +162,21 @@ export default class HomeMap extends React.Component {
             {this.state.directions !== null && (
             <DirectionsRenderer
               directions={this.state.directions}
+              options = {{
+                polylineOptions: {
+                  zIndex: 50,
+                  strokeWeight: 5,
+                  strokeOpacity: 1,
+                  strokeColor: 'black'
+                }
+              }}
+              panel={document.getElementById('directions-panel')}
             />
             )}
           </GoogleMap>
         </LoadScript>
-      </AppContext.Provider>
-
     );
   }
 }
 
-HomeMap.contextType = AppContext;
+Map.contextType = AppContext;
