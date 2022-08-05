@@ -1,5 +1,6 @@
 import React from 'react';
 import { GoogleMap, LoadScript, Marker, InfoWindow, DirectionsRenderer } from '@react-google-maps/api';
+import StarRating from './star-rating';
 import AppContext from '../lib/app-context';
 
 const key = process.env.GOOGLE_MAPS_API_KEY;
@@ -92,7 +93,7 @@ export default class Map extends React.Component {
             position={coords}>
             <div className='info-window, flex'>
               <div><button onClick={this.getDirections} className='direction-button'>DIRECTIONS</button></div>
-              <button className='direction-button'> RATING </button>
+              <div><StarRating /></div>
             </div>
           </InfoWindow>
           }
