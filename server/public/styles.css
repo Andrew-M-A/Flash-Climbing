@@ -1,4 +1,52 @@
+#directions-panel {
+  position: absolute;
+  font-size: 12px;
+  bottom: 5px;
+  width: 20%;
+  background-color: white;
+  opacity: 80%;
+}
+
 .map-container {
-  width: 100%;
+  width: 50%;
   height: 100vh;
+}
+
+@media (max-width: 500px) {
+  .map-container {
+    width: 100%;
+    height: 100vh;
+  }
+
+  #directions-panel {
+    position: absolute;
+    font-size: 8px;
+    bottom: 5px;
+    width: 50%;
+    background-color: white;
+    opacity: 85%;
+  }
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+}
+
+.info-window {
+  background-color: white;
+  border-radius: 50%;
+}
+
+.direction-button {
+  border-radius: 0.2rem;
+  border-style: none;
+  background-color: gold;
+  color: white;
+  margin: 2px;
 }
