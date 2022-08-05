@@ -6,7 +6,17 @@ export default function StarRating() {
 
   const handleRating = rate => {
     setRating(rate);
-    // other logic
+    // const req = {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(rate)
+    // };
+    // // fetch('/api/climbing/rating', req)
+    // //   .then(res => res.json())
+    // //   .then(result => {
+    // //   });
   };
 
   return (
@@ -15,8 +25,8 @@ export default function StarRating() {
       onClick={handleRating}
       ratingValue={rating}
       size={18}
-      fillColorArray={['#f17a45', '#f19745', '#f1a545', '#f1b345', '#f1d045']}
+      fillColorArray={['#90e0ef', '#90e0ef', '#0077b6', '#ff7d00', '#ef233c']}
       tooltipArray={['V0 :)', 'V1-V2', 'V3-V4', 'V5-V6', 'Adam Ondra :O']}
-      allowHalfIcon/>
+      allowHalfIcon />
   );
 }

@@ -50,3 +50,12 @@
   color: white;
   margin: 2px;
 }
+
+.rating-button {
+  font-size: 10px;
+  border-radius: 0.2rem;
+  border-style: none;
+  background-color: gold;
+  color: white;
+  margin: 2px;
+}

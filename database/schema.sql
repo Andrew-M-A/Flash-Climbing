@@ -20,8 +20,8 @@ CREATE TABLE "users" (
 CREATE TABLE "gyms" (
 	"gymId" serial NOT NULL,
 	"name" TEXT NOT NULL,
-	"lat" int NOT NULL,
-	"long" int NOT NULL,
+	"lat" float8 NOT NULL,
+	"lng" float8 NOT NULL,
 	"rating" int,
 	CONSTRAINT "gyms_pk" PRIMARY KEY ("gymId")
 ) WITH (

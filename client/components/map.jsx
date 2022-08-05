@@ -19,7 +19,8 @@ export default class Map extends React.Component {
         duration: null,
         directions: null
       },
-      clickedGym: null
+      clickedGym: null,
+      clickedRate: null
     };
     this.handleClick = this.handleClick.bind(this);
     this.renderMarkers = this.renderMarkers.bind(this);
@@ -38,7 +39,6 @@ export default class Map extends React.Component {
 
   getDirections() {
     const directionsService = new window.google.maps.DirectionsService();
-
     const origin = this.state.currentPosition;
     const destination = this.state.destination;
 
@@ -62,7 +62,6 @@ export default class Map extends React.Component {
           } else {
             console.error(`error fetching directions ${result}`);
           }
-
         }
       );
     }
@@ -93,12 +92,12 @@ export default class Map extends React.Component {
             position={coords}>
             <div className='info-window, flex'>
               <div><button onClick={this.getDirections} className='direction-button'>DIRECTIONS</button></div>
-              <div><StarRating /></div>
+                <div> <button className='rating-button'> GYM DIFFICULTY </button> </div>
+                <div><StarRating /></div>
             </div>
           </InfoWindow>
           }
         </Marker>
-
       );
     });
   }
