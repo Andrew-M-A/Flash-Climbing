@@ -14,13 +14,12 @@ export default class Map extends React.Component {
       gymInfo: [],
       currentPosition: null,
       destination: null,
+      clickedGym: null,
       trip: {
         distance: null,
         duration: null,
         directions: null
-      },
-      clickedGym: null,
-      clickedRate: null
+      }
     };
     this.handleClick = this.handleClick.bind(this);
     this.renderMarkers = this.renderMarkers.bind(this);
@@ -74,6 +73,23 @@ export default class Map extends React.Component {
         lng: gym.coordinates.longitude
       };
       const title = gym.name;
+
+      const req = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: gym.name,
+          lat: gym.coordinates.latitude,
+          lng: gym.coordinates.longitude
+        })
+      };
+      fetch('/api/climbing/gym', req)
+        .then(res => res.json())
+        .then(result => {
+        });
+
       return (
       <Marker
         icon={{
@@ -115,22 +131,24 @@ export default class Map extends React.Component {
         });
       });
     }
-    fetch(`/api/climbing?lat=${this.state.lat}&lng=${this.state.lng}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    })
-      .then(res => res.json())
-      .then(result => {
-        for (let i = 0; i < result.length; i++) {
-          const { name, coordinates, id } = result[i];
-          const gyms = {
-            name,
-            coordinates,
-            id
-          };
-          this.state.gymInfo.push(gyms);
-        }
-      });
+    if (!this.state.currentPosition) {
+      fetch(`/api/climbing?lat=${this.state.lat}&lng=${this.state.lng}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+        .then(res => res.json())
+        .then(result => {
+          for (let i = 0; i < result.length; i++) {
+            const { name, coordinates, id } = result[i];
+            const gyms = {
+              name,
+              coordinates,
+              id
+            };
+            this.state.gymInfo.push(gyms);
+          }
+        });
+    }
   }
 
   render() {
@@ -141,6 +159,7 @@ export default class Map extends React.Component {
     };
 
     return (
+
         <LoadScript googleMapsApiKey={key}>
           <GoogleMap
             mapTypeId='c5df4b8f9589fad8'

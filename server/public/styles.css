@@ -44,6 +44,7 @@
 }
 
 .direction-button {
+  font-size: 13.5px;
   border-radius: 0.2rem;
   border-style: none;
   background-color: gold;
