@@ -68,26 +68,26 @@ export default class Map extends React.Component {
   }
 
   renderMarkers(gyms) {
-    return gyms.map((coordinates, i) => {
+    return gyms.map(gym => {
       const coords = {
-        lat: gyms[i].coordinates.latitude,
-        lng: gyms[i].coordinates.longitude
+        lat: gym.coordinates.latitude,
+        lng: gym.coordinates.longitude
       };
-      const title = gyms[i].name;
+      const title = gym.name;
       return (
       <Marker
         icon={{
           url: 'https://cdn2.iconfinder.com/data/icons/wsd-map-markers-2/512/wsd_markers_72-512.png',
           scaledSize: new window.google.maps.Size(45, 45)
         }}
-        onClick={event => this.handleClick(event, gyms[i].id)}
-        key={gyms[i].id}
+        onClick={event => this.handleClick(event, gym.id)}
+        key={gym.id}
         position={coords}
         title={title}
         animation={window.google.maps.Animation.DROP}>
-          {this.state.clickedGym === gyms[i].id &&
+          {this.state.clickedGym === gym.id &&
           <InfoWindow
-            key={gyms[i].id}
+            key={gym.id}
             options={{ pixelOffset: new window.google.maps.Size(0, -10) }}
             position={coords}>
             <div className='info-window, flex'>
