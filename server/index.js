@@ -2,9 +2,16 @@ require('dotenv/config');
 const path = require('path');
 const express = require('express');
 const errorMiddleware = require('./error-middleware');
-
+const pg = require('pg');
 const yelp = require('yelp-fusion');
 const client = yelp.client(process.env.YELP_API_KEY);
+
+const db = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
 const app = express();
 const publicPath = path.join(__dirname, 'public');
@@ -30,6 +37,44 @@ app.get('/api/climbing', (req, res, next) => {
       res.json(response.jsonBody.businesses);
     })
     .catch(err => next(err));
+});
+
+app.use(express.json());
+
+app.post('/api/climbing', (req, res) => {
+  const user = req.body;
+  if (user.name === undefined) {
+    res.status(400).json({
+      error: 'invalid entry... "name" is required'
+    });
+
+  } else if (user.username === undefined) {
+    res.status(400).json({
+      error: 'invalid entry... "username" is required'
+    });
+
+  } else if (user.password === undefined) {
+    res.status(400).json({
+      error: 'invalid entry... "password" is required'
+    });
+
+  } else {
+    const userEntry = [user.name, user.username, user.password];
+    const sql = `insert into "users" ("name", "userName", "hashedPassword", "joinedAt")
+               values ($1, $2, $3, now())
+               returning *`;
+    db.query(sql, userEntry)
+      .then(result => {
+        res.status(201).json(result.rows[0]);
+      }
+      )
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({
+          error: 'An unexpected error occured'
+        });
+      });
+  }
 });
 
 app.use(errorMiddleware);
