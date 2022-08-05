@@ -6,17 +6,21 @@ export default function StarRating() {
 
   const handleRating = rate => {
     setRating(rate);
-    // const req = {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(rate)
-    // };
-    // // fetch('/api/climbing/rating', req)
-    // //   .then(res => res.json())
-    // //   .then(result => {
-    // //   });
+    const req = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userId: 1,
+        gymId: 1,
+        rating: rate / 20
+      })
+    };
+    fetch('/api/climbing/rating', req)
+      .then(res => res.json())
+      .then(result => {
+      });
   };
 
   return (

@@ -125,9 +125,9 @@ app.post('/api/climbing/rating', (req, res) => {
       error: 'invalid rating'
     });
   } else {
-    const ratingEntry = [rating.rating];
-    const sql = `insert into "ratings" ("rating")
-                             "values" ($1)
+    const ratingEntry = [rating.userId, rating.gymId, rating.rating];
+    const sql = `insert into "ratings" ("userId", "gymId", "rating")
+                              values ($1, $2, $3)
                 returning *`;
     db.query(sql, ratingEntry)
       .then(result => {

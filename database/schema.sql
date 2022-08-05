@@ -17,6 +17,8 @@ CREATE TABLE "users" (
   OIDS=FALSE
 );
 
+
+
 CREATE TABLE "gyms" (
 	"gymId" serial NOT NULL,
 	"name" TEXT NOT NULL,
@@ -28,13 +30,23 @@ CREATE TABLE "gyms" (
   OIDS=FALSE
 );
 
+
+
 CREATE TABLE "ratings" (
 	"userId" int NOT NULL,
 	"gymId" int NOT NULL,
-	"rating" int
+	"rating" float4
 ) WITH (
   OIDS=FALSE
 );
 
+
+
+
+
 ALTER TABLE "ratings" ADD CONSTRAINT "ratings_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
 ALTER TABLE "ratings" ADD CONSTRAINT "ratings_fk1" FOREIGN KEY ("gymId") REFERENCES "gyms"("gymId");
+
+
+
+;
