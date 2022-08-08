@@ -9,7 +9,15 @@
 
 .map-container {
   width: 50%;
-  height: 100vh;
+  height: 94vh;
+}
+
+img {
+  position: absolute;
+  width: 35%;
+  height: 75%;
+  right: 7%;
+  top: 15%;
 }
 
 @media (max-width: 500px) {

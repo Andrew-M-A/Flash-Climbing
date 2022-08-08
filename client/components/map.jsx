@@ -1,6 +1,7 @@
 import React from 'react';
 import { GoogleMap, LoadScript, Marker, InfoWindow, DirectionsRenderer } from '@react-google-maps/api';
 import StarRating from './star-rating';
+import Navbar from './navbar';
 import AppContext from '../lib/app-context';
 
 const key = process.env.GOOGLE_MAPS_API_KEY;
@@ -74,22 +75,6 @@ export default class Map extends React.Component {
       };
       const title = gym.name;
 
-      const req = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: gym.name,
-          lat: gym.coordinates.latitude,
-          lng: gym.coordinates.longitude
-        })
-      };
-      fetch('/api/climbing/gym', req)
-        .then(res => res.json())
-        .then(result => {
-        });
-
       return (
       <Marker
         icon={{
@@ -97,7 +82,7 @@ export default class Map extends React.Component {
           scaledSize: new window.google.maps.Size(45, 45)
         }}
         onClick={event => this.handleClick(event, gym.id)}
-        key={gym.id}
+        key={gym.name}
         position={coords}
         title={title}
         animation={window.google.maps.Animation.DROP}>
@@ -107,9 +92,9 @@ export default class Map extends React.Component {
             options={{ pixelOffset: new window.google.maps.Size(0, -10) }}
             position={coords}>
             <div className='info-window, flex'>
-              <div><button onClick={this.getDirections} className='direction-button'>DIRECTIONS</button></div>
-                <div> <button className='rating-button'> GYM DIFFICULTY </button> </div>
-                <div><StarRating /></div>
+            <div><button onClick={this.getDirections} className='direction-button'>DIRECTIONS</button></div>
+            <div> <button className='rating-button'> GYM DIFFICULTY </button> </div>
+            <div><StarRating /></div>
             </div>
           </InfoWindow>
           }
@@ -146,6 +131,21 @@ export default class Map extends React.Component {
               id
             };
             this.state.gymInfo.push(gyms);
+            const req = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                name: gyms.name,
+                lat: gyms.coordinates.latitude,
+                lng: gyms.coordinates.longitude
+              })
+            };
+            fetch('/api/climbing/gym', req)
+              .then(res => res.json())
+              .then(result => {
+              });
           }
         });
     }
@@ -161,6 +161,7 @@ export default class Map extends React.Component {
     return (
 
         <LoadScript googleMapsApiKey={key}>
+          <Navbar> </Navbar>
           <GoogleMap
             mapTypeId='c5df4b8f9589fad8'
             mapContainerClassName='map-container'
@@ -184,7 +185,7 @@ export default class Map extends React.Component {
                   zIndex: 50,
                   strokeWeight: 5,
                   strokeOpacity: 1,
-                  strokeColor: 'black'
+                  strokeColor: '#202020'
                 }
               }}
               panel={document.getElementById('directions-panel')}
