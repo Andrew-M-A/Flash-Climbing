@@ -31,3 +31,18 @@ I haven't seen any apps tailored to the climbing gym community so took it upon m
 - User can rate difficulty of climbing gym
 - User can Check-In to climbing gym
 - User can share climbing videos
+
+# Getting Started
+- Clone the Repository
+  ```shell
+  git clone https://github.com/Andrew-M-A/Flash-Climbing
+  ```
+ - Install all dependencies with NPM
+   ```shell
+   npm install
+   ```
+ - Start the project.
+   Once started you can view the application by opening http://localhost:3000 in your browser.
+   ```shell
+   npm run dev
+   ```
