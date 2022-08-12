@@ -152,7 +152,6 @@ export default class Map extends React.Component {
   }
 
   render() {
-
     const center = {
       lat: this.state.lat,
       lng: this.state.lng
