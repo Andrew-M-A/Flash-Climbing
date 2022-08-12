@@ -28,6 +28,6 @@ I haven't seen any apps tailored to the climbing gym community so took it upon m
 - User can get directions to climbing gyms
 
 # Features to be Implemented
-- User can rate climbing gyms difficulty
+- User can rate difficulty of climbing gym
 - User can Check-In to climbing gym
 - User can share climbing videos
