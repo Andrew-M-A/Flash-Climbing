@@ -9,7 +9,15 @@
 
 .map-container {
   width: 50%;
-  height: 100vh;
+  height: 94vh;
+}
+
+img {
+  position: absolute;
+  width: 35%;
+  height: 75%;
+  right: 7%;
+  top: 15%;
 }
 
 @media (max-width: 500px) {
@@ -44,6 +52,16 @@
 }
 
 .direction-button {
+  font-size: 13.5px;
+  border-radius: 0.2rem;
+  border-style: none;
+  background-color: gold;
+  color: white;
+  margin: 2px;
+}
+
+.rating-button {
+  font-size: 10px;
   border-radius: 0.2rem;
   border-style: none;
   background-color: gold;
