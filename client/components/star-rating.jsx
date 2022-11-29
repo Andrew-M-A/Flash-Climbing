@@ -26,7 +26,7 @@ export default function StarRating() {
   };
 
   return (
-    <Rating
+      <Rating
       transition
       onClick={handleRating}
       ratingValue={rating}

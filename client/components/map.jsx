@@ -76,27 +76,27 @@ export default class Map extends React.Component {
       const title = gym.name;
 
       return (
-        <Marker
-          icon={{
-            url: 'https://cdn2.iconfinder.com/data/icons/wsd-map-markers-2/512/wsd_markers_72-512.png',
-            scaledSize: new window.google.maps.Size(45, 45)
-          }}
-          onClick={event => this.handleClick(event, gym.id)}
-          key={gym.name}
-          position={coords}
-          title={title}
-          animation={window.google.maps.Animation.DROP}>
+      <Marker
+        icon={{
+          url: 'https://cdn2.iconfinder.com/data/icons/wsd-map-markers-2/512/wsd_markers_72-512.png',
+          scaledSize: new window.google.maps.Size(45, 45)
+        }}
+        onClick={event => this.handleClick(event, gym.id)}
+        key={gym.name}
+        position={coords}
+        title={title}
+        animation={window.google.maps.Animation.DROP}>
           {this.state.clickedGym === gym.id &&
-            <InfoWindow
-              key={gym.id}
-              options={{ pixelOffset: new window.google.maps.Size(0, -10) }}
-              position={coords}>
-              <div className='info-window, flex'>
-                <div><button onClick={this.getDirections} className='direction-button'>DIRECTIONS</button></div>
-                <div> <button className='rating-button'> GYM DIFFICULTY </button> </div>
-                <div><StarRating /></div>
-              </div>
-            </InfoWindow>
+          <InfoWindow
+            key={gym.id}
+            options={{ pixelOffset: new window.google.maps.Size(0, -10) }}
+            position={coords}>
+            <div className='info-window, flex'>
+            <div><button onClick={this.getDirections} className='direction-button'>DIRECTIONS</button></div>
+            <div> <button className='rating-button'> GYM DIFFICULTY </button> </div>
+            <div><StarRating /></div>
+            </div>
+          </InfoWindow>
           }
         </Marker>
       );
@@ -159,27 +159,27 @@ export default class Map extends React.Component {
 
     return (
 
-      <LoadScript googleMapsApiKey={key}>
-        <Navbar> </Navbar>
-        <GoogleMap
-          mapTypeId='c5df4b8f9589fad8'
-          mapContainerClassName='map-container'
-          center={center}
-          zoom={13}
-          options={{
-            mapTypeControl: false,
-            fullscreenControlOptions: false,
-            streetViewControl: false
-          }}>
-          <Marker
-            position={center}
-            title="LFZ BAYBEEE"
-          />
-          {this.renderMarkers(this.state.gymInfo)}
-          {this.state.directions !== null && (
+        <LoadScript googleMapsApiKey={key}>
+          <Navbar> </Navbar>
+          <GoogleMap
+            mapTypeId='c5df4b8f9589fad8'
+            mapContainerClassName='map-container'
+            center={center}
+            zoom={13}
+            options={{
+              mapTypeControl: false,
+              fullscreenControlOptions: false,
+              streetViewControl: false
+            }}>
+            <Marker
+              position={center}
+              title="LFZ BAYBEEE"
+            />
+            {this.renderMarkers(this.state.gymInfo)}
+            {this.state.directions !== null && (
             <DirectionsRenderer
               directions={this.state.directions}
-              options={{
+              options = {{
                 polylineOptions: {
                   zIndex: 50,
                   strokeWeight: 5,
@@ -189,9 +189,9 @@ export default class Map extends React.Component {
               }}
               panel={document.getElementById('directions-panel')}
             />
-          )}
-        </GoogleMap>
-      </LoadScript>
+            )}
+          </GoogleMap>
+        </LoadScript>
     );
   }
 }
