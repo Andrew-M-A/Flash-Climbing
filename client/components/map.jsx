@@ -165,7 +165,7 @@ export default class Map extends React.Component {
             mapTypeId='c5df4b8f9589fad8'
             mapContainerClassName='map-container'
             center={center}
-            zoom={10}
+            zoom={1}
             options={{
               mapTypeControl: false,
               fullscreenControlOptions: false,

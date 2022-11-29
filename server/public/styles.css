@@ -8,16 +8,16 @@
 }
 
 .map-container {
-  width: 50%;
   height: 94vh;
 }
 
-img {
+#logo {
   position: absolute;
-  width: 35%;
-  height: 75%;
-  right: 7%;
-  top: 15%;
+  width: 3%;
+  height: 5%;
+  left: 1%;
+  top: 0.2%;
+  border-radius: 50%;
 }
 
 @media (max-width: 500px) {
