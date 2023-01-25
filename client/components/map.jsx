@@ -87,16 +87,18 @@ export default class Map extends React.Component {
         title={title}
         animation={window.google.maps.Animation.DROP}>
           {this.state.clickedGym === gym.id &&
-          <InfoWindow
-            key={gym.id}
-            options={{ pixelOffset: new window.google.maps.Size(0, -10) }}
-            position={coords}>
-            <div className='info-window, flex'>
-            <div><button onClick={this.getDirections} className='direction-button'>DIRECTIONS</button></div>
-            <div> <button className='rating-button'> GYM DIFFICULTY </button> </div>
-            <div><StarRating /></div>
-            </div>
-          </InfoWindow>
+
+            <InfoWindow
+              key={gym.id}
+              options={{ pixelOffset: new window.google.maps.Size(0, -10) }}
+              position={coords}>
+              <div className='info-window, flex'>
+                <div><button onClick={this.getDirections} className='direction-button'>DIRECTIONS</button></div>
+                <div> <button className='rating-button'> GYM DIFFICULTY </button> </div>
+               <StarRating />
+              </div>
+            </InfoWindow>
+
           }
         </Marker>
       );
@@ -159,24 +161,25 @@ export default class Map extends React.Component {
 
     return (
 
-        <LoadScript googleMapsApiKey={key}>
-          <Navbar> </Navbar>
-          <GoogleMap
-            mapTypeId='c5df4b8f9589fad8'
-            mapContainerClassName='map-container'
-            center={center}
-            zoom={13}
-            options={{
-              mapTypeControl: false,
-              fullscreenControlOptions: false,
-              streetViewControl: false
-            }}>
-            <Marker
-              position={center}
-              title="LFZ BAYBEEE"
-            />
-            {this.renderMarkers(this.state.gymInfo)}
-            {this.state.directions !== null && (
+      <LoadScript googleMapsApiKey={key}>
+        <Navbar> </Navbar>
+        <GoogleMap
+          mapTypeId='c5df4b8f9589fad8'
+          mapContainerClassName='map-container'
+          center={center}
+          zoom={8}
+          options={{
+            mapTypeControl: false,
+            fullscreenControlOptions: false,
+            streetViewControl: false
+          }}>
+          <Marker
+            position={center}
+            title="LFZ BAYBEEE"
+          />
+          {this.renderMarkers(this.state.gymInfo)}
+          {this.state.directions !== null && (
+
             <DirectionsRenderer
               directions={this.state.directions}
               options = {{
