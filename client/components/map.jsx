@@ -76,17 +76,18 @@ export default class Map extends React.Component {
       const title = gym.name;
 
       return (
-        <Marker
-          icon={{
-            url: 'https://cdn2.iconfinder.com/data/icons/wsd-map-markers-2/512/wsd_markers_72-512.png',
-            scaledSize: new window.google.maps.Size(45, 45)
-          }}
-          onClick={event => this.handleClick(event, gym.id)}
-          key={gym.name}
-          position={coords}
-          title={title}
-          animation={window.google.maps.Animation.DROP}>
+      <Marker
+        icon={{
+          url: 'https://cdn2.iconfinder.com/data/icons/wsd-map-markers-2/512/wsd_markers_72-512.png',
+          scaledSize: new window.google.maps.Size(45, 45)
+        }}
+        onClick={event => this.handleClick(event, gym.id)}
+        key={gym.name}
+        position={coords}
+        title={title}
+        animation={window.google.maps.Animation.DROP}>
           {this.state.clickedGym === gym.id &&
+
             <InfoWindow
               key={gym.id}
               options={{ pixelOffset: new window.google.maps.Size(0, -10) }}
@@ -97,6 +98,7 @@ export default class Map extends React.Component {
                <StarRating />
               </div>
             </InfoWindow>
+
           }
         </Marker>
       );
@@ -177,9 +179,10 @@ export default class Map extends React.Component {
           />
           {this.renderMarkers(this.state.gymInfo)}
           {this.state.directions !== null && (
+
             <DirectionsRenderer
               directions={this.state.directions}
-              options={{
+              options = {{
                 polylineOptions: {
                   zIndex: 50,
                   strokeWeight: 5,
@@ -189,9 +192,9 @@ export default class Map extends React.Component {
               }}
               panel={document.getElementById('directions-panel')}
             />
-          )}
-        </GoogleMap>
-      </LoadScript>
+            )}
+          </GoogleMap>
+        </LoadScript>
     );
   }
 }
