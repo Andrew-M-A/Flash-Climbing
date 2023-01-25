@@ -94,7 +94,7 @@ export default class Map extends React.Component {
               <div className='info-window, flex'>
                 <div><button onClick={this.getDirections} className='direction-button'>DIRECTIONS</button></div>
                 <div> <button className='rating-button'> GYM DIFFICULTY </button> </div>
-                <div><StarRating /></div>
+               <StarRating />
               </div>
             </InfoWindow>
           }
@@ -165,7 +165,7 @@ export default class Map extends React.Component {
           mapTypeId='c5df4b8f9589fad8'
           mapContainerClassName='map-container'
           center={center}
-          zoom={13}
+          zoom={8}
           options={{
             mapTypeControl: false,
             fullscreenControlOptions: false,
