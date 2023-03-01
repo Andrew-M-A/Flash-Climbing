@@ -119,7 +119,7 @@ export default class Map extends React.Component {
       });
     }
     if (!this.state.currentPosition) {
-      fetch(`/api/climbing?lat=${this.state.lat}&lng=${this.state.lng}`, {
+      fetch(`api/climbing?lat=${this.state.lat}&lng=${this.state.lng}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
@@ -192,7 +192,7 @@ export default class Map extends React.Component {
               }}
               panel={document.getElementById('directions-panel')}
             />
-            )}
+          )}
           </GoogleMap>
         </LoadScript>
     );
